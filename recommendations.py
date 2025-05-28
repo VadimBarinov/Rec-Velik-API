@@ -44,8 +44,8 @@ class Recommendations:
                 recommend_df.append(current_item.to_dict())
             bike_list.remove(i)
 
-        # добавляем 3-ий велик из второй половины списка рекомендаций
-        recommend_df.append(df.iloc[random.choice(bike_list[len(bike_list)//2:])[0]].to_dict())
+        # добавляем 3-ий велик из первой половины списка рекомендаций
+        recommend_df.append(df.iloc[random.choice(bike_list[:len(bike_list) // 2 + 1])[0]].to_dict())
         random.shuffle(recommend_df)
         
         self.recommend = recommend_df

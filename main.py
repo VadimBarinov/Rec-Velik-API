@@ -11,7 +11,7 @@ app = FastAPI(
     description="REST API для получения рекомендаций",
 )
 
-@app.post("/recommendations/", response_model=List[RecommendationResponse])
+@app.get("/recommendations/", response_model=List[RecommendationResponse])
 async def get_recommend(bike_id: int, db: Session = Depends(get_db)):
     """
         # Получение рекомендаций на основе переданного велосипеда
