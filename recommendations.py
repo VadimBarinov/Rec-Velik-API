@@ -9,10 +9,6 @@ class Recommendations:
         
     def calc_recommendations(self, df, bike_id):
 
-        # создание вектора слов (токенов)
-        cv = CountVectorizer()
-        vectors = cv.fit_transform(df['bike_characteristics_string']).toarray()
-
         # приведение слов к стему (корневому слову)
         ps = PorterStemmer()
 
@@ -22,13 +18,17 @@ class Recommendations:
                 y.append(ps.stem(i))
             return " ".join(y)
 
-
         df['bike_characteristics_string'] = df['bike_characteristics_string'].apply(stem)
+
+        # создание вектора слов (токенов)
+        cv = CountVectorizer()
+        vectors = cv.fit_transform(df['bike_characteristics_string']).toarray()
 
         similarity = cosine_similarity(vectors)
 
         bike_index = df[df['id'] == bike_id].index[0]
         distances = similarity[bike_index]
+
         # получаем рекомендации, исключая переданный велик
         bike_list = sorted(list(enumerate(distances)), reverse=True, key=lambda x: x[1])
         
