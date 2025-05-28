@@ -18,7 +18,7 @@ class Recommendations:
 
         def stem(text):
             y = []
-            for i in text.split():
+            for i in text.split(','):
                 y.append(ps.stem(i))
             return " ".join(y)
 
